@@ -32,12 +32,9 @@ urbnmapr makes a few variations of the same basic map.
 
 ```{r state1, echo = FALSE}
 
-st <- get_urbn_map("states", sf = TRUE)
-st1 <- get_urbn_map("territories_states", sf = TRUE)
-
 ggplot() +
-  geom_sf(data = st,
-          mapping = aes(geometry = geometry),
+  geom_sf(get_urbn_map("states", sf = TRUE),
+          mapping = aes(),
           fill = "grey", color = "white") +
   coord_sf(datum = NA) +
   urbnthemes::theme_urbn_map()
@@ -98,19 +95,20 @@ You can merge your data onto this dataframe to make choropleth maps.
 
 ```{r merge}
 
-geographic_data <- left_join(states, statedata, by = "state_name")
+geographic_data <- left_join(states, statedata, 
+                             by = "state_name")
 
 ```
 
 ## Making maps
 
-```{r example-map}
+```{r example-map, out.height="70%", fig.height=4}
 
 ggplot() +
   geom_sf(data = geographic_data,
           mapping = aes(geometry = geometry, fill = medhhincome),
           color = "white") +
-  scale_fill_gradientn() +
+  scale_fill_gradientn(labels = scales::dollar) +
   coord_sf(datum = NA) +
   urbnthemes::theme_urbn_map() +
   labs(fill = "Median household income")
@@ -143,7 +141,7 @@ get_urbn_map(map = "counties", sf = TRUE) %>%
 
 Custom layouts for specific projects
 
-```{r ccdf, echo = FALSE, out.width = "50%"}
+```{r ccdf, echo = FALSE, out.width = "120%"}
 
 knitr::include_graphics("www/images/ccdf.png")
 
@@ -151,11 +149,17 @@ knitr::include_graphics("www/images/ccdf.png")
 
 </div>
 
+## For more information
+
+Visit the [urbnmapr GitHub page](https://github.com/UrbanInstitute/urbnmapr) for more detailed instructions.
+
+The Urban Institute mapping guide is currently in progress!
+
 # <font color="#ffffff"> Why R? </font> {data-background=#1696d2}
 
 ## Why R?
 
-* Reproducability
+* Reproducibility
 
 * Make the same map 100 times
 
@@ -169,7 +173,7 @@ knitr::include_graphics("www/images/ccdf.png")
 
 * Portable
 
-* Lowering the barrier to entry
+* Lowers the barrier to entry
 
 * Push updates when we need to
 
@@ -183,6 +187,7 @@ We create tools to help researchers do their jobs more efficiently- whether it i
 
 You can follow along:
 
+* Check out our [website](https://ui-research.github.io/r-at-urban/)
 * Sign up for the [urbnverse list serve](https://app.smartsheet.com/b/form/9029a0a8254e4044a52cdebaebe343bf) (we won't email you more than once a month!)
 * Look for new posts on [Data@Urban](https://medium.com/@urban_institute), the Urban Institute's behind-the-scenes blog on data, code, and more.
 * Email me at [sstrochak@urban.org](sstrochak@urban.org) for more information!
