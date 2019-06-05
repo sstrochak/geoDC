@@ -106,7 +106,7 @@ geographic_data <- left_join(states, statedata,
 
 ggplot() +
   geom_sf(data = geographic_data,
-          mapping = aes(geometry = geometry, fill = medhhincome),
+          mapping = aes(fill = medhhincome),
           color = "white") +
   scale_fill_gradientn(labels = scales::dollar) +
   coord_sf(datum = NA) +
